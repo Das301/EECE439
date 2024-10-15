@@ -1,0 +1,203 @@
+{% load static %}
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book System</title>
+</head>
+
+<style>
+    * {
+		box-sizing: border-box;
+		font-family: 'Source Serif 4';
+	}
+	
+	html{
+		height: 100%
+	}
+	
+	body {
+		display: flex;
+		width: auto;
+		margin: 0;
+		overflow-x: hidden;
+		overflow-y: hidden;
+        background-image: url("{% static 'myapp3/library_bg.jpg' %}");
+        background-size: cover;  /* Ensures the image covers the entire viewport */
+        background-repeat: no-repeat;  /* Prevents the background from repeating */
+        background-position: center center;  /* Centers the image */
+        height: 100vh;
+	}
+
+    .wrapper {
+        width: 100%;
+        top: 0;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
+    .top_bar {
+        width:100%;
+        height: 8%;
+    }
+
+    .top_bar nav {
+        width: 100%;
+        height: 100%;
+        background: #c61e3b;
+    }
+
+    .list_option_div {
+        width: auto;
+        height: 100%;
+    }
+
+    .list_option_div ul {
+        margin:0;
+        padding: 0;
+        display: flex;
+        flex-direction: row;
+        height: 100%;
+        list-style-type: none;
+    }
+
+    .list_option_div ul li {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0px 5px ;
+        color: white;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 16px;
+        font-family: 'Source Serif 4';
+    }
+
+    .list_option_div ul li:hover {
+        background: white;
+        color: black;
+    }
+
+    .content {
+        margin-top: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        
+        padding: 10px 0px;
+        max-height: 70%;
+    }
+
+    .entry_div {
+        width: 30%;
+        background: rgba(163, 160, 160, .8);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid black;
+        border-radius: 10px;
+    }
+
+    .entry_div form {
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    .entry {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .label {
+        width: 13%;
+    }
+
+    .label h5 {
+        margin: 0;
+    }
+
+    .entry button {
+        width: 40%;
+        text-align:center;
+        outline: none;
+		border: none;
+		border-radius: 5px;
+		box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+		cursor: pointer;
+		font-size: 16px;
+        margin-top: 10px;
+        padding-top: 3px;
+        padding-bottom: 3px;
+    }
+
+    .entry button:active {
+        box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.25);
+    }
+
+    .entry input {
+        border: none;
+		outline: none;
+        border: 2px solid rgba(255, 255, 255, .2);
+		border-radius: 6px;
+		font-size: 14px;
+		color: black;
+        text-indent: 2px;
+    }
+
+    .entry input::placeholder{
+        color: #a5a5a5;
+    }
+</style>
+
+<body>
+    <div class="wrapper">
+        <div class="top_bar">
+            <nav>
+                <div class="list_option_div">
+                    <ul>
+                        <li class="b1">Add a book</li>
+                        <li class="b2">Search and modify records</li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
+        <div class="content">
+            <div class="entry_div">
+                <h3>Enter book information</h3>
+                <form method="post" action="../add_book/">
+                    {% csrf_token %}
+                    <div class="entry">
+                        <div class="label">
+                            <h5>Title: </h5>
+                        </div>
+                        <input type="text" name="title" placeholder="Book's title" required/>
+                    </div>
+                    <div class="entry">
+                        <div class="label">
+                            <h5>Author: </h5>
+                        </div>
+                        <input type="text" name="author" placeholder="Book's author" required/>
+                    </div>
+                    <div class="entry">
+                        <button type="submit">Add Book</button>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'myapp3/pages2.js' %}?v={{ timestamp }}"></script>
+</body>
+</html>

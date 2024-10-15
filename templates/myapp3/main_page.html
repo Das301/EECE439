@@ -1,0 +1,138 @@
+{% load static %}
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book System</title>
+</head>
+
+<style>
+    * {
+		box-sizing: border-box;
+		font-family: 'Source Serif 4';
+	}
+	
+	html{
+		height: 100%
+	}
+	
+	body {
+		display: flex;
+		width: auto;
+		margin: 0;
+		overflow-x: hidden;
+		overflow-y: hidden;
+        background-image: url("{% static 'myapp3/library_bg.jpg' %}");
+        background-size: cover;  /* Ensures the image covers the entire viewport */
+        background-repeat: no-repeat;  /* Prevents the background from repeating */
+        background-position: center center;  /* Centers the image */
+        height: 100vh;
+	}
+
+    .wrapper {
+        width: 100%;
+        top: 0;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
+    .top_bar {
+        width:100%;
+        height: 8%;
+    }
+
+    .top_bar nav {
+        width: 100%;
+        height: 100%;
+        background: #c61e3b;
+    }
+
+    .list_option_div {
+        width: auto;
+        height: 100%;
+    }
+
+    .list_option_div ul {
+        margin:0;
+        padding: 0;
+        display: flex;
+        flex-direction: row;
+        height: 100%;
+        list-style-type: none;
+    }
+
+    .list_option_div ul li {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0px 5px ;
+        color: white;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 16px;
+        font-family: 'Source Serif 4';
+    }
+
+    .list_option_div ul li:hover {
+        background: white;
+        color: black;
+    }
+
+    .content {
+        margin-top: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: rgba(163, 160, 160, .8);
+        padding: 10px 0px;
+        max-height: 70%;
+    }
+
+    .content h1, .content h3 {
+        margin: 0;
+        font-family: 'Source Serif 4';
+    }
+
+    .content h3 {
+        margin: 7px;
+    }
+</style>
+
+<body>
+    <div class="wrapper">
+        <div class="top_bar">
+            <nav>
+                <div class="list_option_div">
+                    <ul>
+                        <li class="b1">Add a book</li>
+                        <li class="b2">Search and modify records</li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
+        <div class="content">
+            <h1>Welcome to the Library Management System</h1>
+            <h3>Please select one of the options in the bar above</h3>
+        </div>
+    </div>
+    <script>
+    const b1 = document.querySelector(".b1");
+    const b2 = document.querySelector(".b2");
+
+    b1.addEventListener("click", function (){
+        window.location.href = 'add_book/';
+        console.log("Hello there");
+    });
+
+    b2.addEventListener("click", function (){
+        window.location.href = 'search_book/';
+    });
+    </script>
+</body>
+</html>

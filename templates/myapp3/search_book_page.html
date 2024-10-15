@@ -1,0 +1,272 @@
+{% load static %}
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book System</title>
+</head>
+
+<style>
+    * {
+		box-sizing: border-box;
+		font-family: 'Source Serif 4';
+	}
+	
+	html{
+		height: 100%
+	}
+	
+	body {
+		display: flex;
+		width: auto;
+		margin: 0;
+		overflow-x: hidden;
+		overflow-y: hidden;
+        background-image: url("{% static 'myapp3/library_bg.jpg' %}");
+        background-size: cover;  /* Ensures the image covers the entire viewport */
+        background-repeat: no-repeat;  /* Prevents the background from repeating */
+        background-position: center center;  /* Centers the image */
+        height: 100vh;
+	}
+
+    .wrapper {
+        width: 100%;
+        top: 0;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
+    .top_bar {
+        width:100%;
+        height: 8%;
+    }
+
+    .top_bar nav {
+        width: 100%;
+        height: 100%;
+        background: #c61e3b;
+    }
+
+    .list_option_div {
+        width: auto;
+        height: 100%;
+    }
+
+    .list_option_div ul {
+        margin:0;
+        padding: 0;
+        display: flex;
+        flex-direction: row;
+        height: 100%;
+        list-style-type: none;
+    }
+
+    .list_option_div ul li {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0px 5px ;
+        color: white;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 16px;
+        font-family: 'Source Serif 4';
+    }
+
+    .list_option_div ul li:hover {
+        background: white;
+        color: black;
+    }
+
+    .content {
+        margin-top: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: rgba(163, 160, 160, .8);
+        padding: 10px 0px;
+        max-height: 80%;
+    }
+
+    .search {
+        width: 60%;
+    }
+
+    .search form {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        padding: 0px 33px 10px;
+    } 
+
+    .search form input {
+        width: 25%;
+        height: 25px;
+        border: none;
+		outline: none;
+        border: 2px solid rgba(255, 255, 255, .2);
+		border-radius: 8px;
+		font-size: 14px;
+		color: black;
+        text-indent: 2px;
+    }
+
+    .search form input::placeholder{
+        color: #a5a5a5;
+    }
+
+    .search form button {
+        width: 15%;
+        background: #c61e3b;
+        color: white;
+        border-radius: 20px;
+        height: 25px;
+        font-size:16px;
+        text-align:center;
+        outline: none;
+		border: 2px solid black;
+        box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+		cursor: pointer;
+    }
+
+    .search form button:active {
+        box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.25);
+    }
+
+    .table-container{
+		width: 65%;
+		text-align: center;
+		padding: 0px 33px 10px;
+		flex-grow:1;
+        max-height: 80%;
+	}
+
+    .table-container table {
+        display: block;
+        border: 2px solid black;
+        overflow-y: auto;
+        border-collapse: collapse;
+        max-height: 100%;
+        margin: 0 auto;
+    }
+
+    thead {
+        position: sticky;
+        top: 0;
+        font-weight: bold;
+        background-color: #686868;
+        color: white;
+    }
+
+    tbody, tr{
+        width: 100%;
+        table-layout: fixed;
+        display: table;
+    }
+
+    td, th {
+        border: 1px solid #000000;
+        padding: 8px 16px;
+        overflow-wrap: normal;
+	}
+
+    th {
+        background-color: #686868;
+        cursor: text;
+    }
+
+    tr:nth-child(even){
+		background-color: #bbbbbb;
+	}
+
+    tr:nth-child(odd){
+		background-color: #858585;
+	}
+
+    tr {
+        cursor:pointer;
+    }
+
+    tr:hover {
+        background: blue;
+        color: white;
+    }
+
+    ::-webkit-scrollbar {
+	  width: 6px;
+	  height: 6px;
+	  cursor: pointer;
+	}
+
+	::-webkit-scrollbar-thumb {
+	  background: #686868; 
+	  border-radius: 3px;
+	 }
+</style>
+
+<body>
+     <div class="wrapper">
+        <div class="top_bar">
+            <nav>
+                <div class="list_option_div">
+                    <ul>
+                        <li class="b1">Add a book</li>
+                        <li class="b2">Search and modify records</li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
+        <div class="content">
+            <h2>Checkout the available books</h2>
+            <div class="search">
+                <form method="post" action="../search_book/">
+                    {% csrf_token %}
+                    <input type="text" name="id" placeholder="Search by ID"/>
+                    <input type="text" name="title" placeholder="Search by title"/>
+                    <input type="text" name="author" placeholder="Search by author"/>
+                    <button type="submit">Search</button>
+                </form>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <th>Book ID</th>
+                        <th>Book Title</th>
+                        <th>Book Author</th>
+                    </thead>
+                    <tbody>
+                        {% for row in rows %}
+                        <tr data-href="../update_book/{{row.id}}/">
+                            <td>{{row.id}}</td>
+                            <td>{{row.title}}</td>
+                            <td>{{row.author}}</td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+     </div>
+     <script src="{% static 'myapp3/pages2.js' %}?v={{ timestamp }}"></script>
+    <script>
+		document.addEventListener("DOMContentLoaded", () => {
+			const rows = document.querySelectorAll("tr[data-href]");
+
+			rows.forEach(row => {
+				row.addEventListener("click", () => {
+					window.location.href = row.dataset.href;
+				});
+			});
+		});
+	</script>
+</body>
+</html>
